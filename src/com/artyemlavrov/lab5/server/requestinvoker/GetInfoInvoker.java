@@ -1,7 +1,7 @@
 package com.artyemlavrov.lab5.server.requestinvoker;
 
-import com.artyemlavrov.lab5.request.GetInfoRequest;
-import com.artyemlavrov.lab5.response.GetInfoResponse;
+import com.artyemlavrov.lab5.common.request.GetInfoRequest;
+import com.artyemlavrov.lab5.common.response.GetInfoResponse;
 import com.artyemlavrov.lab5.server.WorkersCollection;
 
 public class GetInfoInvoker implements RequestInvoker<GetInfoRequest, GetInfoResponse> {

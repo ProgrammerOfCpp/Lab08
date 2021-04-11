@@ -1,8 +1,8 @@
 package com.artyemlavrov.lab5.server;
 
-import com.artyemlavrov.lab5.client.IOManager;
-import com.artyemlavrov.lab5.types.Status;
-import com.artyemlavrov.lab5.types.Worker;
+import com.artyemlavrov.lab5.common.io.IOManager;
+import com.artyemlavrov.lab5.common.types.Status;
+import com.artyemlavrov.lab5.common.types.Worker;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

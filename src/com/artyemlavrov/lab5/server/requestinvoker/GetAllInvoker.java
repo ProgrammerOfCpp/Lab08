@@ -1,9 +1,9 @@
 package com.artyemlavrov.lab5.server.requestinvoker;
 
-import com.artyemlavrov.lab5.request.GetAllRequest;
-import com.artyemlavrov.lab5.response.GetAllResponse;
+import com.artyemlavrov.lab5.common.request.GetAllRequest;
+import com.artyemlavrov.lab5.common.response.GetAllResponse;
 import com.artyemlavrov.lab5.server.WorkersCollection;
-import com.artyemlavrov.lab5.types.Worker;
+import com.artyemlavrov.lab5.common.types.Worker;
 
 import java.util.List;
 

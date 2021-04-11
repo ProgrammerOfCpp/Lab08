@@ -1,9 +1,9 @@
 package com.artyemlavrov.lab5.server.requestinvoker;
 
-import com.artyemlavrov.lab5.request.AddRequest;
-import com.artyemlavrov.lab5.response.singleelement.AddResponse;
+import com.artyemlavrov.lab5.common.request.AddRequest;
+import com.artyemlavrov.lab5.common.response.singleelement.AddResponse;
 import com.artyemlavrov.lab5.server.WorkersCollection;
-import com.artyemlavrov.lab5.types.Worker;
+import com.artyemlavrov.lab5.common.types.Worker;
 
 public class AddInvoker implements RequestInvoker<AddRequest, AddResponse> {
 

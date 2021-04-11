@@ -1,9 +1,9 @@
 package com.artyemlavrov.lab5.server.requestinvoker;
 
-import com.artyemlavrov.lab5.request.GetStatusDescendingRequest;
-import com.artyemlavrov.lab5.response.GetStatusDescendingResponse;
+import com.artyemlavrov.lab5.common.request.GetStatusDescendingRequest;
+import com.artyemlavrov.lab5.common.response.GetStatusDescendingResponse;
 import com.artyemlavrov.lab5.server.WorkersCollection;
-import com.artyemlavrov.lab5.types.Status;
+import com.artyemlavrov.lab5.common.types.Status;
 
 import java.util.List;
 
