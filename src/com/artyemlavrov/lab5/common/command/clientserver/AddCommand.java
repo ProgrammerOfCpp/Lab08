@@ -1,14 +1,12 @@
-package com.artyemlavrov.lab5.client.command.interactive.serverside;
+package com.artyemlavrov.lab5.common.command.clientserver;
 
-import com.artyemlavrov.lab5.client.Client;
 import com.artyemlavrov.lab5.common.io.IOManager;
-import com.artyemlavrov.lab5.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab5.common.valuereader.complex.WorkerReader;
 import com.artyemlavrov.lab5.common.request.AddRequest;
 import com.artyemlavrov.lab5.common.response.singleelement.AddResponse;
 import com.artyemlavrov.lab5.common.types.Worker;
 
-public class AddCommand extends ServersideCommand<AddRequest, AddResponse> {
+public class AddCommand extends ClientServerCommand<AddRequest, AddResponse> {
 
     @Override
     public String getDescription() {
@@ -21,13 +19,19 @@ public class AddCommand extends ServersideCommand<AddRequest, AddResponse> {
     }
 
     @Override
-    protected AddRequest buildRequest(InterpreterLoop<Client> interpreterLoop, IOManager ioManager) {
+    protected AddRequest buildRequest(IOManager ioManager) {
         Worker worker = new WorkerReader(ioManager).setNullable(false).read();
         return new AddRequest(worker);
     }
 
     @Override
-    protected void onSuccess(InterpreterLoop<Client> interpreterLoop, IOManager ioManager, AddResponse response) {
+    protected void onSuccess(IOManager ioManager, AddResponse response) {
+        Worker element = response.getElement();
+        ioManager.writeLine("Добавлен объект: " + element.toString());
+    }
 
+    @Override
+    protected Class<AddResponse> getResponseClass() {
+        return AddResponse.class;
     }
 }

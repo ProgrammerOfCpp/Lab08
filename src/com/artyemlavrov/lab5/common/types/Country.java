@@ -5,5 +5,5 @@ public enum Country {
     GERMANY,
     SPAIN,
     VATICAN,
-    ITALY;
+    ITALY
 }

@@ -9,14 +9,14 @@ import java.io.IOException;
 
 enum InterpreterMode { CONSOLE, SCRIPT }
 
-public class InterpreterLoop<ApplicationType extends Application> {
+public class InterpreterLoop {
 
     private InterpreterMode mode = InterpreterMode.CONSOLE;
     private boolean stopFlag = false;
     private final IOManager ioManager = new IOManager();
-    private final Interpreter<ApplicationType> interpreter;
+    private final Interpreter interpreter;
 
-    public InterpreterLoop(Interpreter<ApplicationType> interpreter) {
+    public InterpreterLoop(Interpreter interpreter) {
         this.interpreter = interpreter;
     }
 
@@ -44,11 +44,7 @@ public class InterpreterLoop<ApplicationType extends Application> {
         return ioManager;
     }
 
-    public InterpreterMode getMode() {
-        return mode;
-    }
-
-    public ApplicationType getApplication() {
+    public Application getApplication() {
         return interpreter.getApplication();
     }
 
@@ -56,7 +52,7 @@ public class InterpreterLoop<ApplicationType extends Application> {
         return interpreter.getData();
     }
 
-    public Interpreter<ApplicationType> getInterpreter() {
+    public Interpreter getInterpreter() {
         return interpreter;
     }
 
@@ -75,26 +71,29 @@ public class InterpreterLoop<ApplicationType extends Application> {
 
     private void readAndExecuteCommand() {
         try {
-            Command<ApplicationType> command = readCommand();
+            Command command = readCommand();
             executeCommand(command);
-        } catch (CommandNotFoundException e) {
+        } catch (UnknownCommandException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    private Command<ApplicationType> readCommand() throws CommandNotFoundException {
+    private Command readCommand() throws UnknownCommandException {
         String name;
         do {
             name = ioManager.readNext().trim();
         } while (name.isEmpty());
-        CommandFactory<? extends Command<ApplicationType>> commandFactory = interpreter.getCommandFactory();
+        CommandFactory commandFactory = interpreter.getCommandFactory();
         return commandFactory.instantiate(name);
     }
 
-    private void executeCommand(Command<ApplicationType> command) {
-        command.execute(this);
+    private void executeCommand(Command command) {
+        IOManager ioManager = getIOManager();
+        ioManager.setForceWrite(true);
+        command.execute(this, ioManager);
+        ioManager.setForceWrite(false);
+
         InterpreterData interpreterData = getInterpreterData();
         interpreterData.addToHistory(command.getName());
-        ioManager.writeLine("");
     }
 }

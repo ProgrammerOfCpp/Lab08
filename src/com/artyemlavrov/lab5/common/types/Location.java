@@ -3,10 +3,10 @@ package com.artyemlavrov.lab5.common.types;
 import java.io.Serializable;
 
 public class Location implements Serializable {
-    private Float x; //Поле не может быть null
-    private float y;
-    private Float z; //Поле не может быть null
-    private String name; //Поле может быть null
+    private final Float x; //Поле не может быть null
+    private final float y;
+    private final Float z; //Поле не может быть null
+    private final String name; //Поле может быть null
 
     public Location(Float x, float y, Float z, String name) {
         this.x = x;

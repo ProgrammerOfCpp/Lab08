@@ -23,8 +23,15 @@ public class WorkersCollection {
     }
 
     public Worker add(Worker element) {
-        priorityQueue.add(element);
-        return element;
+        Integer id = (int)(System.currentTimeMillis() % Integer.MAX_VALUE);
+        LocalDate creationDate = LocalDate.now();
+        Worker completed = new Worker(
+                element,
+                id,
+                creationDate
+        );
+        priorityQueue.add(completed);
+        return completed;
     }
 
     public void remove(Integer key) {
@@ -41,6 +48,19 @@ public class WorkersCollection {
         return null;
     }
 
+
+    public void update(Integer id, Worker value) {
+        if (!contains(id)) return;
+        Worker old = get(id);
+        Worker updated = new Worker(old, value);
+        remove(id);
+        priorityQueue.add(updated);
+    }
+
+    public boolean contains(Integer id) {
+        return get(id) != null;
+    }
+
     public List<Worker> getAll() {
         return new LinkedList<>(priorityQueue);
     }
@@ -49,12 +69,17 @@ public class WorkersCollection {
         priorityQueue.clear();
     }
 
-    public boolean removeLower(Worker element) {
-        return priorityQueue.removeIf(worker -> worker.compareTo(element) < 0);
+    public void removeLower(Worker element) {
+        priorityQueue.removeIf(worker -> worker.compareTo(element) < 0);
     }
 
     public Worker getHead() {
         return priorityQueue.element();
+    }
+
+    public void removeHead() {
+        Worker head = getHead();
+        remove(head.getId());
     }
 
     public Worker getMaxByCreationDate() {

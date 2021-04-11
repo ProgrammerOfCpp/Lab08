@@ -1,6 +1,6 @@
 package com.artyemlavrov.lab5.common.interpreter;
 
-public class CommandNotFoundException extends Exception {
+public class UnknownCommandException extends Exception {
 
     @Override
     public String getMessage() {

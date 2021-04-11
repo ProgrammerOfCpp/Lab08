@@ -5,10 +5,15 @@ import com.artyemlavrov.lab5.common.response.singleelement.GetMaxByCreationDateR
 import com.artyemlavrov.lab5.server.WorkersCollection;
 import com.artyemlavrov.lab5.common.types.Worker;
 
-public class GetMaxByCreationDateInvoker implements RequestInvoker<GetMaxByCreationDateRequest, GetMaxByCreationDateResponse> {
+public class GetMaxByCreationDateInvoker extends RequestInvoker<GetMaxByCreationDateRequest, GetMaxByCreationDateResponse> {
     @Override
-    public GetMaxByCreationDateResponse invoke(WorkersCollection collection, GetMaxByCreationDateRequest request) {
+    public GetMaxByCreationDateResponse getResponse(WorkersCollection collection, GetMaxByCreationDateRequest request) {
         Worker element = collection.getMaxByCreationDate();
         return new GetMaxByCreationDateResponse(element);
+    }
+
+    @Override
+    public Class<GetMaxByCreationDateRequest> getRequestClass() {
+        return GetMaxByCreationDateRequest.class;
     }
 }

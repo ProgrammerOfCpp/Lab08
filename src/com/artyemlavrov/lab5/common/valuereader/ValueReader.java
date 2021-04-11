@@ -46,12 +46,11 @@ public abstract class ValueReader<T> {
         }
     }
 
+    @SuppressWarnings("SameReturnValue")
     protected T parseNull() throws ValueFormatException {
-        if (isNullable()) {
-            return null;
-        } else {
+        if (!isNullable())
             throw new ValueFormatException("Это поле не может быть пустым!");
-        }
+        return null;
     }
 
     abstract protected T parseNotNull(String argument) throws ValueFormatException;

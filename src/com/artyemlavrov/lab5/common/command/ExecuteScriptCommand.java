@@ -1,13 +1,12 @@
-package com.artyemlavrov.lab5.client.command.interactive;
+package com.artyemlavrov.lab5.common.command;
 
 import com.artyemlavrov.lab5.common.interpreter.Interpreter;
 import com.artyemlavrov.lab5.common.interpreter.InterpreterData;
-import com.artyemlavrov.lab5.common.io.IOManager;
-import com.artyemlavrov.lab5.client.Client;
 import com.artyemlavrov.lab5.common.interpreter.InterpreterLoop;
+import com.artyemlavrov.lab5.common.io.IOManager;
 import com.artyemlavrov.lab5.common.valuereader.simple.StringReader;
 
-public class ExecuteScriptCommand extends InteractiveCommand {
+public class ExecuteScriptCommand extends Command {
 
     @Override
     public String getDescription() {
@@ -20,9 +19,9 @@ public class ExecuteScriptCommand extends InteractiveCommand {
     }
 
     @Override
-    protected void execute(InterpreterLoop<Client> interpreterLoop, IOManager ioManager) {
+    public void execute(InterpreterLoop interpreterLoop, IOManager ioManager) {
         String scriptName = new StringReader(ioManager).setCanBeEmpty(false).setNullable(false).read();
-        Interpreter<Client> interpreter = interpreterLoop.getInterpreter();
+        Interpreter interpreter = interpreterLoop.getInterpreter();
         InterpreterData interpreterData = interpreterLoop.getInterpreterData();
         if (interpreterData.isInScriptStack(scriptName)) {
             System.err.printf("Обнаружено зацикливание! Скрипт %s не будет запущен.\n", scriptName);
@@ -31,9 +30,9 @@ public class ExecuteScriptCommand extends InteractiveCommand {
         }
     }
 
-    private void runScript(InterpreterData interpreterData, Interpreter<Client> interpreter, String scriptName) {
+    private void runScript(InterpreterData interpreterData, Interpreter interpreter, String scriptName) {
         interpreterData.pushToScriptStack(scriptName);
-        InterpreterLoop<Client> newInterpreterLoop = new InterpreterLoop<>(interpreter);
+        InterpreterLoop newInterpreterLoop = new InterpreterLoop(interpreter);
         newInterpreterLoop.runFromScript(scriptName);
         interpreterData.popFromScriptStack();
     }

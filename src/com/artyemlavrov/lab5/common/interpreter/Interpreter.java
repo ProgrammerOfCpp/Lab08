@@ -1,26 +1,25 @@
 package com.artyemlavrov.lab5.common.interpreter;
 
 import com.artyemlavrov.lab5.common.application.Application;
-import com.artyemlavrov.lab5.common.command.Command;
 import com.artyemlavrov.lab5.common.command.CommandFactory;
 
-public class Interpreter<ApplicationType extends Application> {
+public class Interpreter {
 
-    private final ApplicationType application;
+    private final Application application;
     private final InterpreterData interpreterData = new InterpreterData();
-    private final CommandFactory<? extends Command<ApplicationType>> commandFactory;
+    private final CommandFactory commandFactory;
 
-    public Interpreter(ApplicationType application, CommandFactory<? extends Command<ApplicationType>> commandFactory) {
+    public Interpreter(Application application, CommandFactory commandFactory) {
         this.application = application;
         this.commandFactory = commandFactory;
     }
 
     public void run() {
-        InterpreterLoop<ApplicationType> loop = new InterpreterLoop<>(this);
+        InterpreterLoop loop = new InterpreterLoop(this);
         loop.run();
     }
 
-    public ApplicationType getApplication() {
+    public Application getApplication() {
         return application;
     }
 
@@ -28,7 +27,7 @@ public class Interpreter<ApplicationType extends Application> {
         return interpreterData;
     }
 
-    public CommandFactory<? extends Command<ApplicationType>> getCommandFactory() {
+    public CommandFactory getCommandFactory() {
         return commandFactory;
     }
 }

@@ -3,9 +3,9 @@ package com.artyemlavrov.lab5.common.types;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-    private Integer weight; //Поле может быть null, Значение поля должно быть больше 0
-    private Country nationality; //Поле не может быть null
-    private Location location; //Поле не может быть null
+    private final Integer weight; //Поле может быть null, Значение поля должно быть больше 0
+    private final Country nationality; //Поле не может быть null
+    private final Location location; //Поле не может быть null
 
     public Person(Integer weight, Country nationality, Location location) {
         this.weight = weight;

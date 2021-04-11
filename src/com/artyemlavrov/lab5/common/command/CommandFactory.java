@@ -1,40 +1,50 @@
 package com.artyemlavrov.lab5.common.command;
 
-import com.artyemlavrov.lab5.common.application.Application;
-import com.artyemlavrov.lab5.common.interpreter.CommandNotFoundException;
+import com.artyemlavrov.lab5.common.command.clientserver.*;
+import com.artyemlavrov.lab5.common.interpreter.UnknownCommandException;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CommandFactory<CommandType extends Command<? extends Application>> {
-    private final Map<String, CommandType> commands = new HashMap<>();
+public abstract class CommandFactory {
+    private final Map<String, Command> commands = new HashMap<>();
 
     protected CommandFactory() {
-        registerAllCommands();
+        registerCommands();
     }
 
-    protected abstract CommandType[] getCommandsForRegistration();
+    protected void registerCommands() {
+        registerCommand(new InfoCommand());
+        registerCommand(new ShowCommand());
+        registerCommand(new AddCommand());
+        registerCommand(new UpdateCommand());
+        registerCommand(new RemoveByIdCommand());
+        registerCommand(new ClearCommand());
+        registerCommand(new RemoveHeadCommand());
+        registerCommand(new RemoveLowerCommand());
+        registerCommand(new SumOfSalaryCommand());
+        registerCommand(new MaxByCreationDateCommand());
+        registerCommand(new PrintFieldDescendingStatusCommand());
 
-    private void registerAllCommands() {
-        for (CommandType command : getCommandsForRegistration()) {
-            registerCommand(command);
-        }
+        registerCommand(new ExecuteScriptCommand());
+        registerCommand(new HelpCommand());
+        registerCommand(new HistoryCommand());
     }
 
-    private void registerCommand(CommandType command) {
+    public void registerCommand(Command command) {
         commands.put(command.getName(), command);
     }
 
-    public CommandType instantiate(String commandName) throws CommandNotFoundException {
+    public Command instantiate(String commandName) throws UnknownCommandException {
         String key = commandName.trim().toLowerCase();
         if (!commands.containsKey(key)) {
-            throw new CommandNotFoundException();
+            throw new UnknownCommandException();
         }
         return commands.get(key);
     }
 
-    public Collection<CommandType> getAllCommands() {
+    public Collection<Command> getAllCommands() {
         return commands.values();
     }
 }

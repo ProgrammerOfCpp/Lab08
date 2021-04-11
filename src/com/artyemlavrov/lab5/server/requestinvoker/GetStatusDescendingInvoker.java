@@ -7,10 +7,15 @@ import com.artyemlavrov.lab5.common.types.Status;
 
 import java.util.List;
 
-public class GetStatusDescendingInvoker implements RequestInvoker<GetStatusDescendingRequest, GetStatusDescendingResponse> {
+public class GetStatusDescendingInvoker extends RequestInvoker<GetStatusDescendingRequest, GetStatusDescendingResponse> {
     @Override
-    public GetStatusDescendingResponse invoke(WorkersCollection collection, GetStatusDescendingRequest request) {
+    public GetStatusDescendingResponse getResponse(WorkersCollection collection, GetStatusDescendingRequest request) {
         List<Status> statusList = collection.getStatusListDescending();
         return new GetStatusDescendingResponse(statusList);
+    }
+
+    @Override
+    public Class<GetStatusDescendingRequest> getRequestClass() {
+        return GetStatusDescendingRequest.class;
     }
 }

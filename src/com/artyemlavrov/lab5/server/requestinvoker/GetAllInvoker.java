@@ -7,10 +7,15 @@ import com.artyemlavrov.lab5.common.types.Worker;
 
 import java.util.List;
 
-public class GetAllInvoker implements RequestInvoker<GetAllRequest, GetAllResponse> {
+public class GetAllInvoker extends RequestInvoker<GetAllRequest, GetAllResponse> {
     @Override
-    public GetAllResponse invoke(WorkersCollection collection, GetAllRequest request) {
+    public GetAllResponse getResponse(WorkersCollection collection, GetAllRequest request) {
         List<Worker> elements = collection.getAll();
         return new GetAllResponse(elements);
+    }
+
+    @Override
+    public Class<GetAllRequest> getRequestClass() {
+        return GetAllRequest.class;
     }
 }

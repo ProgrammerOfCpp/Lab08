@@ -4,24 +4,39 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Worker implements Comparable<Worker>, Serializable {
-    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private double salary; //Значение поля должно быть больше 0
-    private Position position; //Поле не может быть null
-    private Status status; //Поле может быть null
-    private Person person; //Поле может быть null
+    private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final Coordinates coordinates; //Поле не может быть null
+    private final java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private final double salary; //Значение поля должно быть больше 0
+    private final Position position; //Поле не может быть null
+    private final Status status; //Поле может быть null
+    private final Person person; //Поле может быть null
 
-    public Worker(Integer id, String name, Coordinates coordinates, LocalDate creationDate, double salary, Position position, Status status, Person person) {
-        this.id = id;
+    public Worker(String name, Coordinates coordinates, double salary, Position position, Status status, Person person) {
+        this.id = 0;
         this.name = name;
         this.coordinates = coordinates;
-        this.creationDate = creationDate;
+        this.creationDate = LocalDate.ofEpochDay(0);
         this.salary = salary;
         this.position = position;
         this.status = status;
         this.person = person;
+    }
+
+    public Worker(Worker worker, Integer id, LocalDate creationDate) {
+        this.id = id;
+        this.name = worker.name;
+        this.coordinates = worker.coordinates;
+        this.creationDate = creationDate;
+        this.salary = worker.salary;
+        this.position = worker.position;
+        this.status = worker.status;
+        this.person = worker.person;
+    }
+
+    public Worker(Worker old, Worker update) {
+        this(update, old.id, old.creationDate);
     }
 
     @Override

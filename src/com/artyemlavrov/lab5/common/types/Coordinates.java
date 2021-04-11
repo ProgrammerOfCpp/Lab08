@@ -3,8 +3,8 @@ package com.artyemlavrov.lab5.common.types;
 import java.io.Serializable;
 
 public class Coordinates implements Serializable {
-    private float x;
-    private double y; //Значение поля должно быть больше -268
+    private final float x;
+    private final double y; //Значение поля должно быть больше -268
 
     public Coordinates(float x, double y) {
         this.x = x;

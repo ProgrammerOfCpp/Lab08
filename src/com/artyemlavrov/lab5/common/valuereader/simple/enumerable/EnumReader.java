@@ -34,5 +34,5 @@ abstract class EnumReader<T extends Enum<T>> extends ValueSimpleReader<T> {
 
     abstract T[] getEnumValues();
 
-    abstract T valueOf(String name) throws ValueFormatException;
+    abstract T valueOf(String name);
 }
