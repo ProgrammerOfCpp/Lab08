@@ -2,15 +2,22 @@ package com.artyemlavrov.lab6.server.requestinvoker;
 
 import com.artyemlavrov.lab6.common.request.GetInfoRequest;
 import com.artyemlavrov.lab6.common.response.GetInfoResponse;
-import com.artyemlavrov.lab6.server.WorkersCollection;
+import com.artyemlavrov.lab6.server.ServerApplication;
+import com.artyemlavrov.lab6.server.database.CollectionProvider;
 
-public class GetInfoInvoker extends RequestInvoker<GetInfoRequest, GetInfoResponse> {
+public class GetInfoInvoker extends RequestInvoker<GetInfoRequest> {
+
+    public GetInfoInvoker(ServerApplication application) {
+        super(application);
+    }
+
     @Override
-    public GetInfoResponse invoke(WorkersCollection collection, GetInfoRequest request) {
+    public GetInfoResponse buildResponse(GetInfoRequest request) {
+        CollectionProvider collectionProvider = getCollectionProvider(request);
         return new GetInfoResponse(
-                collection.getType(),
-                collection.getInitializationDate(),
-                collection.getElementsCount()
+                collectionProvider.getType(),
+                collectionProvider.getInitializationDate(),
+                collectionProvider.getElementsCount()
         );
     }
 

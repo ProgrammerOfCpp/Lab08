@@ -1,4 +1,4 @@
-package com.artyemlavrov.lab6.common.response.collectionemptiness;
+package com.artyemlavrov.lab6.server.response.collectionemptiness;
 
 import com.artyemlavrov.lab6.common.response.Response;
 

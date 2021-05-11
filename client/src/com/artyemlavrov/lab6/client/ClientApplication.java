@@ -8,9 +8,49 @@ import com.artyemlavrov.lab6.common.request.Request;
 import com.artyemlavrov.lab6.common.response.Response;
 
 public class ClientApplication extends Application {
+
     private Client client;
 
     public static void main(String[] args) {
+
+        class Kek {
+            synchronized void work() {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            synchronized void complete() {
+                notifyAll();
+            }
+        }
+
+        Kek kek = new Kek();
+        Thread t1 = new Thread(() -> {
+            kek.work();
+            System.out.println("T1!");
+        });
+        Thread t2 = new Thread(() -> {
+            kek.work();
+            System.out.println("T2!");
+        });
+        t1.start();
+        t2.start();
+
+        Thread t3 = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                kek.complete();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t3.start();
+
+
+
         String ip = DefaultServerConfig.IP;
         int port = DefaultServerConfig.PORT;
         try {
@@ -31,9 +71,8 @@ public class ClientApplication extends Application {
         interpreter.run();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <ResponseType extends Response, RequestType extends Request> ResponseType getResponse(RequestType request) throws RequestFailureException {
-        return (ResponseType) client.makeRequest(request);
+    public <RequestType extends Request> Response getResponse(RequestType request) throws RequestFailureException {
+        return (Response) client.makeRequest(request);
     }
 }

@@ -13,30 +13,31 @@ public class Worker implements Comparable<Worker>, Serializable {
     private final Status status; //Поле может быть null
     private final Person person; //Поле может быть null
 
-    public Worker(String name, Coordinates coordinates, double salary, Position position, Status status, Person person) {
-        this.id = 0;
+    public Worker(Integer id, LocalDate creationDate, String name, Coordinates coordinates, double salary, Position position, Status status, Person person) {
+        this.id = id;
+        this.creationDate = creationDate;
         this.name = name;
         this.coordinates = coordinates;
-        this.creationDate = LocalDate.ofEpochDay(0);
         this.salary = salary;
         this.position = position;
         this.status = status;
         this.person = person;
     }
 
-    public Worker(Worker worker, Integer id, LocalDate creationDate) {
-        this.id = id;
-        this.name = worker.name;
-        this.coordinates = worker.coordinates;
-        this.creationDate = creationDate;
-        this.salary = worker.salary;
-        this.position = worker.position;
-        this.status = worker.status;
-        this.person = worker.person;
+    public Worker(String name, Coordinates coordinates, double salary, Position position, Status status, Person person) {
+        this(0, LocalDate.ofEpochDay(0), name, coordinates, salary, position, status, person);
     }
 
-    public Worker(Worker old, Worker update) {
-        this(update, old.id, old.creationDate);
+    public Worker(Worker worker, Integer id) {
+        this(id, worker.creationDate, worker.name, worker.coordinates, worker.salary, worker.position, worker.status, worker.person);
+    }
+
+    public Worker(Worker worker, LocalDate creationDate) {
+        this(worker.id, creationDate, worker.name, worker.coordinates, worker.salary, worker.position, worker.status, worker.person);
+    }
+
+    public Worker(Worker old, Worker worker) {
+        this(old.id, old.creationDate, worker.name, worker.coordinates, worker.salary, worker.position, worker.status, worker.person);
     }
 
     @Override
@@ -94,5 +95,21 @@ public class Worker implements Comparable<Worker>, Serializable {
 
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public String getName() {
+        return name;
     }
 }

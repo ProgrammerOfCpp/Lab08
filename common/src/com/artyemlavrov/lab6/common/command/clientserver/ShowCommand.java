@@ -1,5 +1,6 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.request.GetAllRequest;
 import com.artyemlavrov.lab6.common.response.GetAllResponse;
@@ -7,7 +8,11 @@ import com.artyemlavrov.lab6.common.types.Worker;
 
 import java.util.List;
 
-public class ShowCommand extends ClientServerCommand<GetAllRequest, GetAllResponse> {
+public class ShowCommand extends ClientServerCommand<GetAllResponse> {
+
+    public ShowCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -21,7 +26,7 @@ public class ShowCommand extends ClientServerCommand<GetAllRequest, GetAllRespon
 
     @Override
     protected GetAllRequest buildRequest(IOManager ioManager) {
-        return new GetAllRequest();
+        return new GetAllRequest(getAuthentication());
     }
 
     @Override
@@ -30,7 +35,7 @@ public class ShowCommand extends ClientServerCommand<GetAllRequest, GetAllRespon
         if (elementsList.isEmpty()) {
             ioManager.writeLine("Коллекция пустая.");
         } else {
-            elementsList.forEach(element -> ioManager.write(element + " "));
+            elementsList.forEach(ioManager::writeLine);
             ioManager.newLine();
         }
     }

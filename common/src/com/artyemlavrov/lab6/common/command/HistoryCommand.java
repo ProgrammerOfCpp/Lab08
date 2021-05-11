@@ -8,9 +8,13 @@ import java.util.List;
 
 public class HistoryCommand extends Command {
 
+    public HistoryCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
+
     @Override
-    public void execute(InterpreterLoop interpreterLoop, IOManager ioManager) {
-        InterpreterData interpreterData = interpreterLoop.getInterpreterData();
+    public void onExecute(IOManager ioManager) {
+        InterpreterData interpreterData = getInterpreterData();
         List<String> history = interpreterData.getHistory(6);
         for (String entry : history) {
             ioManager.writeLine(entry);

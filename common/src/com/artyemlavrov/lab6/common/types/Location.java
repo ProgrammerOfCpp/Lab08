@@ -46,4 +46,20 @@ public class Location implements Serializable {
             }
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public Float getZ() {
+        return z;
+    }
 }

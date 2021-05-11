@@ -1,4 +1,4 @@
-package com.artyemlavrov.lab6.common.interpreter;
+package com.artyemlavrov.lab6.common.exception;
 
 public class UnknownCommandException extends Exception {
 

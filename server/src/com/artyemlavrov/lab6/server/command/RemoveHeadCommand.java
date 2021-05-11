@@ -1,10 +1,16 @@
-package com.artyemlavrov.lab6.common.command.clientserver;
+package com.artyemlavrov.lab6.server.command;
 
+import com.artyemlavrov.lab6.common.command.clientserver.ClientServerCommand;
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
-import com.artyemlavrov.lab6.common.request.RemoveHeadRequest;
-import com.artyemlavrov.lab6.common.response.collectionemptiness.RemoveHeadResponse;
+import com.artyemlavrov.lab6.server.request.RemoveHeadRequest;
+import com.artyemlavrov.lab6.server.response.collectionemptiness.RemoveHeadResponse;
 
-public class RemoveHeadCommand extends ClientServerCommand<RemoveHeadRequest, RemoveHeadResponse> {
+public class RemoveHeadCommand extends ClientServerCommand<RemoveHeadResponse> {
+
+    public RemoveHeadCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -18,7 +24,7 @@ public class RemoveHeadCommand extends ClientServerCommand<RemoveHeadRequest, Re
 
     @Override
     protected RemoveHeadRequest buildRequest(IOManager ioManager) {
-        return new RemoveHeadRequest();
+        return new RemoveHeadRequest(getAuthentication());
     }
 
     @Override

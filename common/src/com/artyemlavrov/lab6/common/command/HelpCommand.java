@@ -6,11 +6,16 @@ import com.artyemlavrov.lab6.common.util.IOManager;
 
 public class HelpCommand extends Command {
 
+    public HelpCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
+
     @Override
-    public void execute(InterpreterLoop interpreterLoop, IOManager ioManager) {
+    public void onExecute(IOManager ioManager) {
+        InterpreterLoop interpreterLoop = getInterpreterLoop();
         Interpreter interpreter = interpreterLoop.getInterpreter();
         CommandFactory commandFactory = interpreter.getCommandFactory();
-        for (Command command : commandFactory.getAllCommands()) {
+        for (Command command : commandFactory.getAllCommands(interpreterLoop)) {
             ioManager.write(command.getName() + " ");
             ioManager.writeLine(command.getDescription());
         }

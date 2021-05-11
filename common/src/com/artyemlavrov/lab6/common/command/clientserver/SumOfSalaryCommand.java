@@ -1,10 +1,15 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.request.GetSumOfSalaryRequest;
 import com.artyemlavrov.lab6.common.response.GetSumOfSalaryResponse;
 
-public class SumOfSalaryCommand extends ClientServerCommand<GetSumOfSalaryRequest, GetSumOfSalaryResponse> {
+public class SumOfSalaryCommand extends ClientServerCommand<GetSumOfSalaryResponse> {
+
+    public SumOfSalaryCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -18,7 +23,7 @@ public class SumOfSalaryCommand extends ClientServerCommand<GetSumOfSalaryReques
 
     @Override
     protected GetSumOfSalaryRequest buildRequest(IOManager ioManager) {
-        return new GetSumOfSalaryRequest();
+        return new GetSumOfSalaryRequest(getAuthentication());
     }
 
     @Override

@@ -1,13 +1,17 @@
 package com.artyemlavrov.lab6.common.command;
 
-import com.artyemlavrov.lab6.common.command.Command;
 import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 
 public class ExitCommand extends Command {
 
+    public ExitCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
+
     @Override
-    public void execute(InterpreterLoop interpreterLoop, IOManager ioManager) {
+    public void onExecute(IOManager ioManager) {
+        InterpreterLoop interpreterLoop = getInterpreterLoop();
         interpreterLoop.stop();
     }
 

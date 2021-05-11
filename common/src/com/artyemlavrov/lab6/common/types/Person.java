@@ -22,6 +22,18 @@ public class Person implements Serializable {
                 '}';
     }
 
+    public Country getNationality() {
+        return nationality;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
     public static int compare(Person a, Person b) {
         if (a == null) {
             return b == null ? 0 : -1;

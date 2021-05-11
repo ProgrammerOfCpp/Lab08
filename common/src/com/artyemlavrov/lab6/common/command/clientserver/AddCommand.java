@@ -1,12 +1,17 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.valuereader.complex.WorkerReader;
 import com.artyemlavrov.lab6.common.request.AddRequest;
 import com.artyemlavrov.lab6.common.response.singleelement.AddResponse;
 import com.artyemlavrov.lab6.common.types.Worker;
 
-public class AddCommand extends ClientServerCommand<AddRequest, AddResponse> {
+public class AddCommand extends ClientServerCommand<AddResponse> {
+
+    public AddCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -21,7 +26,7 @@ public class AddCommand extends ClientServerCommand<AddRequest, AddResponse> {
     @Override
     protected AddRequest buildRequest(IOManager ioManager) {
         Worker worker = new WorkerReader(ioManager).setNullable(false).read();
-        return new AddRequest(worker);
+        return new AddRequest(getAuthentication(), worker);
     }
 
     @Override

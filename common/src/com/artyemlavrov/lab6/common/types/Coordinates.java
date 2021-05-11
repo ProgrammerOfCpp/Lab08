@@ -32,4 +32,12 @@ public class Coordinates implements Serializable {
             }
         }
     }
+
+    public double getY() {
+        return y;
+    }
+
+    public float getX() {
+        return x;
+    }
 }

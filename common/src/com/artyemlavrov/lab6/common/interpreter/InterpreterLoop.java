@@ -3,6 +3,7 @@ package com.artyemlavrov.lab6.common.interpreter;
 import com.artyemlavrov.lab6.common.application.Application;
 import com.artyemlavrov.lab6.common.command.Command;
 import com.artyemlavrov.lab6.common.command.CommandFactory;
+import com.artyemlavrov.lab6.common.exception.UnknownCommandException;
 import com.artyemlavrov.lab6.common.util.IOManager;
 
 import java.io.IOException;
@@ -84,13 +85,13 @@ public class InterpreterLoop {
             name = ioManager.readNext().trim();
         } while (name.isEmpty());
         CommandFactory commandFactory = interpreter.getCommandFactory();
-        return commandFactory.instantiate(name);
+        return commandFactory.instantiate(this, name);
     }
 
     private void executeCommand(Command command) {
         IOManager ioManager = getIOManager();
         ioManager.setForceWrite(true);
-        command.execute(this, ioManager);
+        command.execute();
         ioManager.setForceWrite(false);
 
         InterpreterData interpreterData = getInterpreterData();

@@ -2,15 +2,21 @@ package com.artyemlavrov.lab6.server.requestinvoker;
 
 import com.artyemlavrov.lab6.common.request.AddRequest;
 import com.artyemlavrov.lab6.common.response.singleelement.AddResponse;
-import com.artyemlavrov.lab6.server.WorkersCollection;
 import com.artyemlavrov.lab6.common.types.Worker;
+import com.artyemlavrov.lab6.server.ServerApplication;
+import com.artyemlavrov.lab6.server.database.CollectionProvider;
 
-public class AddInvoker extends RequestInvoker<AddRequest, AddResponse> {
+public class AddInvoker extends RequestInvoker<AddRequest> {
+
+    public AddInvoker(ServerApplication application) {
+        super(application);
+    }
 
     @Override
-    public AddResponse invoke(WorkersCollection collection, AddRequest request) {
+    public AddResponse buildResponse(AddRequest request) {
+        CollectionProvider collectionProvider = getCollectionProvider(request);
         Worker element = request.getElement();
-        Worker newElement = collection.add(element);
+        Worker newElement = collectionProvider.add(element);
         return new AddResponse(newElement);
     }
 

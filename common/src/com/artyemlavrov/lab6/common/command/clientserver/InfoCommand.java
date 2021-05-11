@@ -1,10 +1,15 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.request.GetInfoRequest;
 import com.artyemlavrov.lab6.common.response.GetInfoResponse;
 
-public class InfoCommand extends ClientServerCommand<GetInfoRequest, GetInfoResponse> {
+public class InfoCommand extends ClientServerCommand<GetInfoResponse> {
+
+    public InfoCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -18,7 +23,7 @@ public class InfoCommand extends ClientServerCommand<GetInfoRequest, GetInfoResp
 
     @Override
     protected GetInfoRequest buildRequest(IOManager ioManager) {
-        return new GetInfoRequest();
+        return new GetInfoRequest(getAuthentication());
     }
 
     @Override

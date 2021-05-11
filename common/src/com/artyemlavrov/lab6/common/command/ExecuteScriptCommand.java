@@ -8,6 +8,10 @@ import com.artyemlavrov.lab6.common.valuereader.simple.StringReader;
 
 public class ExecuteScriptCommand extends Command {
 
+    public ExecuteScriptCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
+
     @Override
     public String getDescription() {
         return "file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.";
@@ -19,10 +23,11 @@ public class ExecuteScriptCommand extends Command {
     }
 
     @Override
-    public void execute(InterpreterLoop interpreterLoop, IOManager ioManager) {
+    public void onExecute(IOManager ioManager) {
         String scriptName = new StringReader(ioManager).setCanBeEmpty(false).setNullable(false).read();
-        Interpreter interpreter = interpreterLoop.getInterpreter();
-        InterpreterData interpreterData = interpreterLoop.getInterpreterData();
+
+        Interpreter interpreter = getInterpreter();
+        InterpreterData interpreterData = getInterpreterData();
         if (interpreterData.isInScriptStack(scriptName)) {
             System.err.printf("Обнаружено зацикливание! Скрипт %s не будет запущен.\n", scriptName);
         } else {

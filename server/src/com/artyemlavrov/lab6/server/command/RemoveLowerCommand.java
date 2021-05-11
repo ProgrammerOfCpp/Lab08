@@ -1,12 +1,18 @@
-package com.artyemlavrov.lab6.common.command.clientserver;
+package com.artyemlavrov.lab6.server.command;
 
+import com.artyemlavrov.lab6.common.command.clientserver.ClientServerCommand;
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.valuereader.complex.WorkerReader;
-import com.artyemlavrov.lab6.common.request.RemoveLowerRequest;
-import com.artyemlavrov.lab6.common.response.RemoveLowerResponse;
+import com.artyemlavrov.lab6.server.request.RemoveLowerRequest;
+import com.artyemlavrov.lab6.server.RemoveLowerResponse;
 import com.artyemlavrov.lab6.common.types.Worker;
 
-public class RemoveLowerCommand extends ClientServerCommand<RemoveLowerRequest, RemoveLowerResponse> {
+public class RemoveLowerCommand extends ClientServerCommand<RemoveLowerResponse> {
+
+    public RemoveLowerCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -30,6 +36,6 @@ public class RemoveLowerCommand extends ClientServerCommand<RemoveLowerRequest, 
     @Override
     protected RemoveLowerRequest buildRequest(IOManager ioManager) {
         Worker element = new WorkerReader(ioManager).setNullable(false).read();
-        return new RemoveLowerRequest(element);
+        return new RemoveLowerRequest(getAuthentication(), element);
     }
 }

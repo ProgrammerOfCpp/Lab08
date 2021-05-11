@@ -1,17 +1,23 @@
 package com.artyemlavrov.lab6.server.requestinvoker;
 
-import com.artyemlavrov.lab6.common.request.RemoveHeadRequest;
-import com.artyemlavrov.lab6.common.response.collectionemptiness.RemoveHeadResponse;
-import com.artyemlavrov.lab6.server.WorkersCollection;
+import com.artyemlavrov.lab6.server.request.RemoveHeadRequest;
+import com.artyemlavrov.lab6.server.response.collectionemptiness.RemoveHeadResponse;
+import com.artyemlavrov.lab6.server.ServerApplication;
+import com.artyemlavrov.lab6.server.database.CollectionProvider;
 
-public class RemoveHeadInvoker extends RequestInvoker<RemoveHeadRequest, RemoveHeadResponse> {
+public class RemoveHeadInvoker extends RequestInvoker<RemoveHeadRequest> {
+
+    public RemoveHeadInvoker(ServerApplication application) {
+        super(application);
+    }
 
     @Override
-    public RemoveHeadResponse invoke(WorkersCollection collection, RemoveHeadRequest request) {
-        if (collection.isEmpty()) {
+    public RemoveHeadResponse buildResponse(RemoveHeadRequest request) {
+        CollectionProvider collectionProvider = getCollectionProvider(request);
+        if (collectionProvider.isEmpty()) {
             return new RemoveHeadResponse(true);
         } else {
-            collection.removeHead();
+            collectionProvider.removeHead();
             return new RemoveHeadResponse(false);
         }
     }

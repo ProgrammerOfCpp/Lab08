@@ -1,5 +1,6 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.request.GetStatusDescendingRequest;
 import com.artyemlavrov.lab6.common.response.GetStatusDescendingResponse;
@@ -7,7 +8,11 @@ import com.artyemlavrov.lab6.common.types.Status;
 
 import java.util.List;
 
-public class PrintFieldDescendingStatusCommand extends ClientServerCommand<GetStatusDescendingRequest, GetStatusDescendingResponse> {
+public class PrintFieldDescendingStatusCommand extends ClientServerCommand<GetStatusDescendingResponse> {
+
+    public PrintFieldDescendingStatusCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -21,7 +26,7 @@ public class PrintFieldDescendingStatusCommand extends ClientServerCommand<GetSt
 
     @Override
     protected GetStatusDescendingRequest buildRequest(IOManager ioManager) {
-        return new GetStatusDescendingRequest();
+        return new GetStatusDescendingRequest(getAuthentication());
     }
 
     @Override

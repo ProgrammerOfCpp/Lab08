@@ -13,6 +13,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.*;
 import java.util.function.Function;
 
 public class Server {
@@ -22,10 +23,17 @@ public class Server {
     private final int port;
     private volatile boolean isRunning;
     private final Logger logger = (Logger) LoggerFactory.getLogger(Server.class);
+    protected ForkJoinPool requestExecutorPool;
+    protected ForkJoinPool responseSenderPool;
+    protected ExecutorService requestReaderPool;
 
     public Server(int port, Function<Object, Serializable> getResponse) {
         this.getResponse = getResponse;
         this.port = port;
+        this.requestExecutorPool = ForkJoinPool.commonPool();
+        this.responseSenderPool = ForkJoinPool.commonPool();
+        this.requestReaderPool = Executors.newCachedThreadPool();
+
         thread = new Thread(() -> {
             try {
                 Selector selector = createSelectorWithChannel();
@@ -90,18 +98,45 @@ public class Server {
 
     private void onReadable(SelectionKey key) {
         SocketChannel socketChannel = (SocketChannel) key.channel();
-        try {
-            readAndWriteChannel(socketChannel);
-        } catch (IOException | ClassNotFoundException e) {
-            closeChannel(socketChannel);
-        }
+        readAndWriteChannel(socketChannel);
     }
 
-    private void readAndWriteChannel(SocketChannel channel) throws IOException, ClassNotFoundException {
-        Object request = readRequest(channel);
-        Serializable response = getResponse.apply(request);
-        writeResponse(channel, response);
-        logger.info("Произведён обмен данными с {}", channel.getRemoteAddress());
+    private void readAndWriteChannel(SocketChannel channel) {
+        Callable<Object> readRequestTask = () -> {
+            try {
+                return readRequest(channel);
+            } catch (IOException e) {
+                closeChannel(channel);
+                return null;
+            }
+        };
+        Future<Object> requestFuture = requestReaderPool.submit(readRequestTask);
+        Object rq = null;
+        while (!requestFuture.isDone()) {
+            try {
+                rq = requestFuture.get();
+            } catch (InterruptedException | ExecutionException ex) {
+                logger.error(ex.getMessage());
+                break;
+            }
+        }
+        if (rq != null) {
+            final Object request = rq;
+            final Serializable resp = requestExecutorPool.invoke(new RecursiveTask<Serializable>() {
+                @Override
+                protected Serializable compute() {
+                    return getResponse.apply(request);
+                }
+            });
+            responseSenderPool.invoke(ForkJoinTask.adapt(() -> {
+                try {
+                    this.writeResponse(channel, resp);
+                } catch (IOException ex) {
+                    logger.error(ex.getMessage());
+                    logger.error("Не удалось отправить ответ {}", channel.socket().getRemoteSocketAddress());
+                }
+            }));
+        }
     }
 
     private Object readRequest(SocketChannel channel) throws IOException, ClassNotFoundException {

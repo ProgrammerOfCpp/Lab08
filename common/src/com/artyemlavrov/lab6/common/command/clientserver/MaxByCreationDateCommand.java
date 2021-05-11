@@ -1,11 +1,16 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
+import com.artyemlavrov.lab6.common.response.GetMaxByCreationDateResponse;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.request.GetMaxByCreationDateRequest;
-import com.artyemlavrov.lab6.common.response.singleelement.GetMaxByCreationDateResponse;
 import com.artyemlavrov.lab6.common.types.Worker;
 
-public class MaxByCreationDateCommand extends ClientServerCommand<GetMaxByCreationDateRequest, GetMaxByCreationDateResponse> {
+public class MaxByCreationDateCommand extends ClientServerCommand<GetMaxByCreationDateResponse> {
+
+    public MaxByCreationDateCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -19,7 +24,7 @@ public class MaxByCreationDateCommand extends ClientServerCommand<GetMaxByCreati
 
     @Override
     protected GetMaxByCreationDateRequest buildRequest(IOManager ioManager) {
-        return new GetMaxByCreationDateRequest();
+        return new GetMaxByCreationDateRequest(getAuthentication());
     }
 
     @Override
@@ -31,5 +36,4 @@ public class MaxByCreationDateCommand extends ClientServerCommand<GetMaxByCreati
             ioManager.writeLine(element);
         }
     }
-
 }

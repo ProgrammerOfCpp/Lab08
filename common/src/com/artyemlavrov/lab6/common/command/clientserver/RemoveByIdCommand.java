@@ -1,11 +1,16 @@
 package com.artyemlavrov.lab6.common.command.clientserver;
 
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
 import com.artyemlavrov.lab6.common.util.IOManager;
 import com.artyemlavrov.lab6.common.valuereader.simple.number.IntegerReader;
 import com.artyemlavrov.lab6.common.request.RemoveByIdRequest;
 import com.artyemlavrov.lab6.common.response.elementexistence.RemoveByIdResponse;
 
-public class RemoveByIdCommand extends ClientServerCommand<RemoveByIdRequest, RemoveByIdResponse> {
+public class RemoveByIdCommand extends ClientServerCommand<RemoveByIdResponse> {
+
+    public RemoveByIdCommand(InterpreterLoop interpreterLoop) {
+        super(interpreterLoop);
+    }
 
     @Override
     public String getDescription() {
@@ -20,7 +25,7 @@ public class RemoveByIdCommand extends ClientServerCommand<RemoveByIdRequest, Re
     @Override
     protected RemoveByIdRequest buildRequest(IOManager ioManager) {
         Integer id = new IntegerReader(ioManager).setNullable(false).read();
-        return new RemoveByIdRequest(id);
+        return new RemoveByIdRequest(getAuthentication(), id);
     }
 
     @Override

@@ -1,51 +1,56 @@
 package com.artyemlavrov.lab6.common.command;
 
 import com.artyemlavrov.lab6.common.command.clientserver.*;
-import com.artyemlavrov.lab6.common.interpreter.UnknownCommandException;
+import com.artyemlavrov.lab6.common.interpreter.InterpreterLoop;
+import com.artyemlavrov.lab6.common.exception.UnknownCommandException;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class CommandFactory {
-    private final Map<String, Command> commands = new HashMap<>();
 
-    protected CommandFactory() {
-        registerCommands();
+    private final List<Class<? extends Command>> commandClasses = new LinkedList<>();
+
+    public CommandFactory() {
+        addCommandClasses(commandClasses);
     }
 
-    protected void registerCommands() {
-        registerCommand(new InfoCommand());
-        registerCommand(new ShowCommand());
-        registerCommand(new AddCommand());
-        registerCommand(new UpdateCommand());
-        registerCommand(new RemoveByIdCommand());
-        registerCommand(new ClearCommand());
-        registerCommand(new RemoveHeadCommand());
-        registerCommand(new RemoveLowerCommand());
-        registerCommand(new SumOfSalaryCommand());
-        registerCommand(new MaxByCreationDateCommand());
-        registerCommand(new PrintFieldDescendingStatusCommand());
-        registerCommand(new ExitCommand());
-
-        registerCommand(new ExecuteScriptCommand());
-        registerCommand(new HelpCommand());
-        registerCommand(new HistoryCommand());
-    }
-
-    public void registerCommand(Command command) {
-        commands.put(command.getName(), command);
-    }
-
-    public Command instantiate(String commandName) throws UnknownCommandException {
+    public Command instantiate(InterpreterLoop interpreterLoop, String commandName) throws UnknownCommandException {
         String key = commandName.trim().toLowerCase();
-        if (!commands.containsKey(key)) {
-            throw new UnknownCommandException();
+        for (Command command : getAllCommands(interpreterLoop)) {
+            if (command.getName().equals(key)) {
+                return command;
+            }
         }
-        return commands.get(key);
+        throw new UnknownCommandException();
     }
 
-    public Collection<Command> getAllCommands() {
-        return commands.values();
+    public List<Command> getAllCommands(InterpreterLoop interpreterLoop) {
+        return commandClasses.stream().map((commandClass) -> {
+            try {
+                Constructor<? extends Command> commandConstructor = commandClass.getConstructor(InterpreterLoop.class);
+                return commandConstructor.newInstance(interpreterLoop);
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                return null;
+            }
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    protected void addCommandClasses(List<Class<? extends Command>> commandClasses) {
+        commandClasses.add(InfoCommand.class);
+        commandClasses.add(InfoCommand.class);
+        commandClasses.add(ShowCommand.class);
+        commandClasses.add(AddCommand.class);
+        commandClasses.add(UpdateCommand.class);
+        commandClasses.add(RemoveByIdCommand.class);
+        commandClasses.add(SumOfSalaryCommand.class);
+        commandClasses.add(MaxByCreationDateCommand.class);
+        commandClasses.add(PrintFieldDescendingStatusCommand.class);
+        commandClasses.add(ExitCommand.class);
+        commandClasses.add(ExecuteScriptCommand.class);
+        commandClasses.add(HelpCommand.class);
+        commandClasses.add(HistoryCommand.class);
     }
 }
