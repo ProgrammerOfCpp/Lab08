@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -74,11 +75,13 @@ public class WorkersTableView extends TableView<Worker> {
 
     @SuppressWarnings("unchecked")
     public void initialize(ResourceBundle resourceBundle, ObservableList<Worker> data, BasicApplication application) {
+        NumberFormat format = NumberFormat.getInstance(application.getLocale());
+
         this.getColumns().setAll(
                 createColumn(resourceBundle, "table_id", Worker::getId),
                 createColumn(resourceBundle, "table_name", Worker::getName),
                 createColumn(resourceBundle, "table_creation_date", Worker::getCreationDate),
-                createColumn(resourceBundle, "table_salary", Worker::getSalary),
+                createColumn(resourceBundle, "table_salary", worker -> format.format(worker.getSalary())),
                 createColumn(resourceBundle, "table_status", Worker::getStatus),
                 createMultiColumn(resourceBundle, "table_coordinates",
                         createColumn(resourceBundle, "table_coordinates_x", worker -> worker.getCoordinates().getX()),

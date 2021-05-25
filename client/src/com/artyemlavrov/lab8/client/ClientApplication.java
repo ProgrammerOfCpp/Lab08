@@ -31,8 +31,7 @@ public class ClientApplication extends BasicApplication {
         String ip = args.getOrDefault("ip", DefaultServerConfig.IP);
         int port = Integer.parseInt(args.getOrDefault("port", DefaultServerConfig.PORT));
         client = new Client(ip, port);
-        setAuthentication(new Authentication("adam", "smith"));
-        setWorkersTableScene();
+        this.setLoginScene();
     }
 
     @Override
