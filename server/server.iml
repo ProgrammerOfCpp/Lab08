@@ -13,5 +13,6 @@
     <orderEntry type="library" exported="" name="logback-classic-1.2.3" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.9" level="project" />
     <orderEntry type="library" exported="" name="postgresql-42.2.20" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

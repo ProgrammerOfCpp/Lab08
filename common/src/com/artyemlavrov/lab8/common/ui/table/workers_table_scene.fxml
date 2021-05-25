@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import com.artyemlavrov.lab8.common.ui.table.WorkersTableView?>
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      prefHeight="400.0" prefWidth="800.0">
+    <MenuBar BorderPane.alignment="TOP_LEFT">
+        <Menu text="%menu_operations">
+            <MenuItem fx:id="addMenuItem" text="%menu_add"/>
+            <MenuItem fx:id="clearMenuItem" text="%menu_clear"/>
+            <MenuItem fx:id="getInfoMenuItem" text="%menu_get_info"/>
+            <MenuItem fx:id="sumOfSalaryMenuItem" text="%menu_sum_of_salary"/>
+            <MenuItem fx:id="removeLowerMenuItem" text="%menu_remove_lower"/>
+            <MenuItem fx:id="removeHeadMenuItem" text="%menu_remove_head"/>
+        </Menu>
+        <Menu text="%menu_view">
+            <MenuItem fx:id="graphMenuItem" text="%menu_graph"/>
+        </Menu>
+        <Menu text="%menu_language">
+            <MenuItem fx:id="russianMenuItem" text="%menu_russian"/>
+            <MenuItem fx:id="latvianMenuItem" text="%menu_latvian"/>
+            <MenuItem fx:id="canadianMenuItem" text="%menu_canadian"/>
+            <MenuItem fx:id="slovakianMenuItem" text="%menu_slovak"/>
+        </Menu>
+    </MenuBar>
+    <HBox>
+        <VBox BorderPane.alignment="CENTER_LEFT"
+            minWidth="130">
+            <Label text="%key_label"/>
+            <ComboBox fx:id="keyComboBox"/>
+            <Label text="%value_label"/>
+            <TextField fx:id="valueTextField"/>
+            <Button fx:id="filterButton" text="%set_filter_label"/>
+        </VBox>
+        <WorkersTableView fx:id="workersTableView"/>
+    </HBox>
+</VBox>

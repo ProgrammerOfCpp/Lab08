@@ -1,6 +1,6 @@
-add Worker
+update 1
+Worker
 John
-Coordinates 0 0
-1
+Coordinates 400 200
+100
 COOK
-PROBATION

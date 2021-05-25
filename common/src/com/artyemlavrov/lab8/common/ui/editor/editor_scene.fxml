@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml">
+    <VBox>
+        <GridPane>
+            <Label text="%table_name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label text="%table_coordinates_x" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="coordinatesXTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label text="%table_coordinates_y" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="coordinatesYTextField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Label text="%table_salary" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="salaryTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label text="%table_position" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <ComboBox fx:id="positionComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Label text="%table_status" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <CheckBox fx:id="statusCheckbox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <ComboBox fx:id="statusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <Label text="%table_person" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+            <CheckBox fx:id="personCheckbox" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            <Label fx:id="weightLabel" text="%table_weight" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <CheckBox fx:id="weightCheckbox" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            <TextField fx:id="weightTextField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            <Label fx:id="nationalityLabel" text="%table_nationality" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+            <ComboBox fx:id="nationalityComboBox" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <Label fx:id="locationLabel" text="%table_location" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+            <Label fx:id="locationXLabel" text="%table_location_x" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+            <TextField fx:id="locationXTextField" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+            <Label fx:id="locationYLabel" text="%table_location_y" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+            <TextField fx:id="locationYTextField" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+            <Label fx:id="locationZLabel" text="%table_location_z" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+            <TextField fx:id="locationZTextField" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+            <Label fx:id="locationNameLabel" text="%table_location_name" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
+            <CheckBox fx:id="locationNameCheckbox" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+            <TextField fx:id="locationNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
+        </GridPane>
+        <HBox
+            minHeight="40">
+            <Button fx:id="saveButton" text="%editor_save"/>
+            <Button fx:id="cancelButton" text="%editor_cancel"/>
+            <Button fx:id="deleteButton" text="%editor_delete"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
